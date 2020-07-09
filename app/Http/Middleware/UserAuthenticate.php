@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use App\Http\Controllers\BaseController;
+use App\Models\Credentials;
+use Closure;
+
+class UserAuthenticate extends BaseController
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if ($request->header(HEADER_AUTH_KEY)) {
+            $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+            if($credential) {
+                return $next($request);
+            } else {
+                return $this->response(null, 401);
+            }
+        } else {
+            return $this->response(null, 401);
+        }
+    }
+}
