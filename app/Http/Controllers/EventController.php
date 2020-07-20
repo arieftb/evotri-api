@@ -51,7 +51,6 @@ class EventController extends BaseController
                 return $this->response(null, 400);
             }
         } catch (\Throwable $th) {
-            echo $th->getMessage();
             return $this->responseError($th->getCode(), $th->getMessage());
         }
     }
