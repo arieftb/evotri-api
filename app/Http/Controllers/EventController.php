@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\Event;
 use App\Helpers\EncryptHelper;
 use App\Http\Controllers\BaseController;
 use App\Models\Credentials;
-use App\Models\EventAdmins;
 use App\Models\Events;
 use App\Models\Voters;
 use Illuminate\Http\Request;
@@ -46,5 +44,10 @@ class EventController extends BaseController
         } catch (\Throwable $th) {
             return $this->responseError($th->getCode(), $th->getMessage());
         }
+    }
+
+    public function index()
+    {
+        return $this->response(Events::all(), 200);
     }
 }

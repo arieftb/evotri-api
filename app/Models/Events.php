@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Events extends Model {
     protected $table = 'events';
 
-    protected $hidded = [CREATED_AT_FIELD, MODIFIED_AT_FIELD];
+    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD];
 
     protected $guarded = [ID_FIELD];
 

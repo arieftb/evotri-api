@@ -4,7 +4,7 @@
     define('HEADER_AUTH_KEY', 'auth');
 
     define('CREATED_AT_FIELD', 'created_at');
-    define('MODIFIED_AT_FIELD', 'modified_at');
+    define('MODIFIED_AT_FIELD', 'updated_at');
     define('ID_FIELD', 'id');
 
     define('USER_ID_FIELD', 'id');

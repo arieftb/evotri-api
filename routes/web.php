@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\EventController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -29,6 +31,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->put('/users/{id}', 'UserController@update');
         $router->delete('/users/{id}', 'UserController@destroy');
 
+        $router->get('/events', 'EventController@index');
         $router->post('/events', 'EventController@store');
 
         // TODO : Change Function Name
