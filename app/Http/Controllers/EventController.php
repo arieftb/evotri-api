@@ -6,6 +6,7 @@ use App\Events\Event;
 use App\Helpers\EncryptHelper;
 use App\Http\Controllers\BaseController;
 use App\Models\Credentials;
+use App\Models\EventAdmins;
 use App\Models\Events;
 use App\Models\Voters;
 use Illuminate\Http\Request;
@@ -37,12 +38,20 @@ class EventController extends BaseController
             $voterPost = $event->voter()->save($voter);
 
             if ($voterPost) {
-                return $this->response(null, 201);
+                $eventAdmin = new EventAdmins();
+                $eventAdmin[VOTER_ID_FOREIGN_FIELD] = $voterPost->id;
+                $eventAdminPost = $voterPost->admin()->save($eventAdmin);
+
+                if ($eventAdminPost) {
+                    return $this->response(null, 201);
+                } else {
+                    return $this->response(null, 400);
+                }
             } else {
                 return $this->response(null, 400);
             }
         } catch (\Throwable $th) {
-            // echo $th->getMessage();
+            echo $th->getMessage();
             return $this->responseError($th->getCode(), $th->getMessage());
         }
     }
