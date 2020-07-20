@@ -32,6 +32,7 @@
     define('EVENT_REGISTRATION_OPEN_FIELD', 'registration_open_date');
     define('EVENT_REGISTRATION_CLOSE_FIELD', 'registration_close_date');
     define('EVENT_DATE_FIELD', 'date');
+    define('EVENT_IS_PUBLIC', 'is_public');
 
 
     define('EVENT_ADMIN_VOTER_ID_FIELD', 'voter_id');

@@ -9,7 +9,7 @@ class Events extends Model {
 
     protected $hidded = [CREATED_AT_FIELD, MODIFIED_AT_FIELD];
 
-    protected $guarded = [];
+    protected $guarded = [ID_FIELD];
 
 
     public static function getEventPostRule() {
