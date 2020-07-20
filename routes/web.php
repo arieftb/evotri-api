@@ -32,6 +32,6 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->post('/events', 'EventController@store');
 
 
-        $router->post('/events/{id_event}/voters', 'VoterController@storeByEvent');
+        $router->post('/events/{event_id}/voters', 'VoterController@storeByEvent');
     });
 });
