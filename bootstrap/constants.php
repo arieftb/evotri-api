@@ -41,6 +41,7 @@
 
     define('VOTER_EVENT_ID_FIELD', 'event_id');
     define('VOTER_IS_ACTIVE_FIELD', 'is_active');
+    define('VOTER_IS_ADMIN_FIELD', 'is_admin');
 
 
     define('RESPONSE_IS_SUPERADMIN_FIELD', 'is_superadmin');

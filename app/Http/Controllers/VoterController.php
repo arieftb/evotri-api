@@ -21,6 +21,8 @@ class VoterController extends BaseController
 
     //
 
+
+    // TODO : Change Function Name
     public function storeByEvent(Request $request, $event_id)
     {
         $user_id = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->firstOrFail()->user_id;

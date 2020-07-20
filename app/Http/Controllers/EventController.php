@@ -34,19 +34,12 @@ class EventController extends BaseController
             $voter[USER_ID_FOREIGN_FIELD] = $user_id;
             $voter[EVENT_ID_FOREIGN_FIELD] = $event->id;
             $voter[VOTER_IS_ACTIVE_FIELD] = '1';
+            $voter[VOTER_IS_ADMIN_FIELD] = '1';
 
             $voterPost = $event->voter()->save($voter);
 
             if ($voterPost) {
-                $eventAdmin = new EventAdmins();
-                $eventAdmin[VOTER_ID_FOREIGN_FIELD] = $voterPost->id;
-                $eventAdminPost = $voterPost->admin()->save($eventAdmin);
-
-                if ($eventAdminPost) {
-                    return $this->response(null, 201);
-                } else {
-                    return $this->response(null, 400);
-                }
+                return $this->response(null, 201);
             } else {
                 return $this->response(null, 400);
             }
