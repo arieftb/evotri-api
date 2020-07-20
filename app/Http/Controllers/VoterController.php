@@ -24,12 +24,13 @@ class VoterController extends BaseController
     public function storeByEvent(Request $request, $event_id)
     {
         $user_id = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->firstOrFail()->user_id;
-        $event_id_data = Events::where(ID_FIELD, $event_id)->where(EVENT_CODE_FIELD, $request->input(EVENT_CODE_FIELD))->firstOrFail()->id;
+        $event = Events::where(ID_FIELD, $event_id)->where(EVENT_CODE_FIELD, $request->input(EVENT_CODE_FIELD))->firstOrFail();
 
 
-        if ($user_id && $event_id_data) {
+
+        if ($user_id && $event) {
             $request[USER_ID_FOREIGN_FIELD]  = $user_id;
-            $request[EVENT_ID_FOREIGN_FIELD] = $event_id;
+            $request[EVENT_ID_FOREIGN_FIELD] = $event->id;
 
             try {
                 //code...
