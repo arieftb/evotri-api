@@ -46,8 +46,18 @@ class EventController extends BaseController
         }
     }
 
-    public function index()
+    // TODO : Not Finish Yet
+    public function indexWithCredential(Request $request)
     {
-        return $this->response(Events::all(), 200);
+        $events = Events::all();
+
+        if ($request->has(EVENT_IS_PUBLIC)) {
+            $is_public = $request->input(EVENT_IS_PUBLIC);
+            $events = $events->where(EVENT_IS_PUBLIC, $is_public);
+        }
+
+        return $this->response($events, 200);
     }
+
+    
 }
