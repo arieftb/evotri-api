@@ -30,19 +30,20 @@ class EventController extends BaseController
             $event = Events::create($request->all());
 
             $voter = new Voters();
-            $voter['user_id'] = $user_id;
-            $voter['event_id'] = $event->id;
+            $voter[USER_ID_FOREIGN_FIELD] = $user_id;
+            $voter[EVENT_ID_FOREIGN_FIELD] = $event->id;
+            $voter[VOTER_IS_ACTIVE_FIELD] = '1';
 
             $voterPost = $event->voter()->save($voter);
 
-            if($voterPost) {
+            if ($voterPost) {
                 return $this->response(null, 201);
             } else {
                 return $this->response(null, 400);
             }
         } catch (\Throwable $th) {
-            echo $th->getMessage();
-            // return $this->responseError($th->getCod  e());
+            // echo $th->getMessage();
+            return $this->responseError($th->getCode(), $th->getMessage());
         }
     }
 }
