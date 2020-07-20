@@ -30,5 +30,8 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->delete('/users/{id}', 'UserController@destroy');
 
         $router->post('/events', 'EventController@store');
+
+
+        $router->post('/events/{id_event}/voters', 'VoterController@storeByEvent');
     });
 });

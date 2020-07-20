@@ -13,6 +13,16 @@ class Voters extends Model {
 
     protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD];
 
+
+    public function getVoterRules()
+    {
+        return [
+            EVENT_ID_FOREIGN_FIELD => 'required',
+            USER_ID_FOREIGN_FIELD => 'required',
+            EVENT_CODE_FIELD => 'required',
+        ];
+    }
+
     public function event()
     {
         return $this->belongsTo(Events::class, EVENT_ID_FOREIGN_FIELD);
