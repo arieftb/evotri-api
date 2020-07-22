@@ -49,6 +49,14 @@ class EventController extends BaseController
     // TODO : Not Finish Yet
     public function indexWithCredential(Request $request)
     {
+
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+        if ($credential) {
+            $user_id = $credential->user_id;
+            $request[USER_ID_FOREIGN_FIELD] = $user_id;
+        }
+
         $events = Events::all();
 
         if ($request->has(EVENT_IS_PUBLIC)) {
@@ -56,6 +64,7 @@ class EventController extends BaseController
             $events = $events->where(EVENT_IS_PUBLIC, $is_public);
         }
 
+        // return response($events);
         return $this->response($events, 200);
     }
 

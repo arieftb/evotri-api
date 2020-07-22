@@ -11,6 +11,8 @@ class Events extends Model {
 
     protected $guarded = [ID_FIELD];
 
+    protected $appends = [RESPONSE_IS_ADMIN_FIELD, RESPONSE_IS_JOINED_FIELD];
+
 
     public static function getEventPostRule() {
         return [
@@ -25,5 +27,19 @@ class Events extends Model {
     public function voter()
     {
         return $this->hasMany(Voters::class, EVENT_ID_FOREIGN_FIELD);
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->voter->first()->is_admin;
+    }
+
+    public function getIsJoinedAttribute()
+    {
+        if ($this->voter) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -45,6 +45,8 @@
 
 
     define('RESPONSE_IS_SUPERADMIN_FIELD', 'is_superadmin');
+    define('RESPONSE_IS_ADMIN_FIELD', 'is_admin');
+    define('RESPONSE_IS_JOINED_FIELD', 'is_joined');
 
     define('MESSAGE_ERROR_USER_FAILED_LOGIN', 'Email and password that you entered don\'t match. Please check and try again.');
     define('MESSAGE_ERROR_EVENT_FAILED_POST', 'Event that you entered dont\'t completed.');
