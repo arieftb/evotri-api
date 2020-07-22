@@ -6,6 +6,7 @@ use App\Helpers\EncryptHelper;
 use App\Http\Controllers\BaseController;
 use App\Models\Credentials;
 use App\Models\Events;
+use App\Models\EventsDetail;
 use App\Models\Voters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -34,7 +35,7 @@ class EventController extends BaseController
             $voter[VOTER_IS_ACTIVE_FIELD] = '1';
             $voter[VOTER_IS_ADMIN_FIELD] = '1';
 
-            $voterPost = $event->voters->save($voter);
+            $voterPost = $event->voters()->save($voter);
 
             if ($voterPost) {
                 return $this->response(null, 201);
@@ -58,6 +59,7 @@ class EventController extends BaseController
             return $this->response($this->indexPublic(), 200);
         }
 
+
         $events = Events::all();
 
         if ($request->has(EVENT_IS_PUBLIC)) {
@@ -70,8 +72,8 @@ class EventController extends BaseController
             $events = $events->where(RESPONSE_IS_JOINED_FIELD, $is_joined);
         }
 
-        if ($request->has(VOTER_IS_ADMIN_FIELD)) {
-            $is_admin = $request->input(VOTER_IS_ADMIN_FIELD);
+        if ($request->has(RESPONSE_IS_ADMIN_FIELD)) {
+            $is_admin = $request->input(RESPONSE_IS_ADMIN_FIELD);
             $events = $events->where(VOTER_IS_ADMIN_FIELD, $is_admin);
         }
 

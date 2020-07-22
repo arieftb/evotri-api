@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Events extends Model {
     protected $table = 'events';
 
-    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, EVENT_IS_PUBLIC, VOTER_TABLE];
+    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, EVENT_IS_PUBLIC, EVENT_IS_ACTIVE_FIELD, VOTER_TABLE];
 
     protected $guarded = [ID_FIELD];
 
-    protected $appends = [RESPONSE_IS_ADMIN_FIELD, RESPONSE_IS_JOINED_FIELD, RESPONSE_IS_PUBLIC_FIELD];
+    protected $appends = [RESPONSE_IS_ADMIN_FIELD, RESPONSE_IS_JOINED_FIELD, RESPONSE_IS_PUBLIC_FIELD, RESPONSE_IS_ACTIVE_FIELD];
 
 
     public static function getEventPostRule() {
@@ -29,27 +29,28 @@ class Events extends Model {
         return $this->hasMany(Voters::class, EVENT_ID_FOREIGN_FIELD);
     }
 
-    public function getIsPublicEventAttribute()
+    public function getIsPublicAttribute()
     {
-        return (int)$this->is_public;
+        return (int) $this->public;
     }
 
     public function getIsAdminAttribute()
     {
-        return (int) $this->voters->first()->is_admin;
+        $voter = $this->voters->first();
+        return $voter != null ? (int)$voter->is_admin : 0;
     }
 
     public function getIsJoinedAttribute()
     {
-        if ($this->voters) {
+        if ($this->voters->first()) {
             return 1;
         } else {
             return 0;
         }
     }
 
-    public function setHide($hidden_list)
+    public function getIsActiveAttribute()
     {
-        $this->setHidden($hidden_list);
+        return (int) $this->active;
     }
 }

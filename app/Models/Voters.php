@@ -23,13 +23,8 @@ class Voters extends Model {
         ];
     }
 
-    public function event()
+    public function events()
     {
         return $this->belongsTo(Events::class, EVENT_ID_FOREIGN_FIELD);
-    }
-
-    public function admin()
-    {
-        return $this->hasOne(EventAdmins::class, VOTER_ID_FOREIGN_FIELD);
     }
 }

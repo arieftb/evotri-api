@@ -28,11 +28,11 @@
     define('EVENT_ID_FIELD', 'id');
     define('EVENT_CODE_FIELD', 'code');
     define('EVENT_NAME_FIELD', 'name');
-    define('EVENT_IS_ACTIVE_FIELD', 'is_active');   
+    define('EVENT_IS_ACTIVE_FIELD', 'active');   
     define('EVENT_REGISTRATION_OPEN_FIELD', 'registration_open_date');
     define('EVENT_REGISTRATION_CLOSE_FIELD', 'registration_close_date');
     define('EVENT_DATE_FIELD', 'date');
-    define('EVENT_IS_PUBLIC', 'is_public');
+    define('EVENT_IS_PUBLIC', 'public');
 
 
     define('EVENT_ADMIN_VOTER_ID_FIELD', 'voter_id');
@@ -48,7 +48,8 @@
     define('RESPONSE_IS_SUPERADMIN_FIELD', 'is_superadmin');
     define('RESPONSE_IS_ADMIN_FIELD', 'is_admin');
     define('RESPONSE_IS_JOINED_FIELD', 'is_joined');
-    define('RESPONSE_IS_PUBLIC_FIELD', 'is_public_event');
+    define('RESPONSE_IS_PUBLIC_FIELD', 'is_public');
+    define('RESPONSE_IS_ACTIVE_FIELD', 'is_active');
 
     define('MESSAGE_ERROR_USER_FAILED_LOGIN', 'Email and password that you entered don\'t match. Please check and try again.');
     define('MESSAGE_ERROR_EVENT_FAILED_POST', 'Event that you entered dont\'t completed.');
