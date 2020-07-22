@@ -18,7 +18,7 @@ class BaseAuthenticate extends BaseController
     {
         if ($request->header(HEADER_TOKEN_KEY)) {
             return $next($request);
-        } else {
+        } else {        
             return $this->response(null, 401);
         }
     }

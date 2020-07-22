@@ -39,6 +39,7 @@
     define('EVENT_ADMIN_IS_ACTIVE_FIELD', 'is_active');
 
 
+    define('VOTER_TABLE', 'voters');
     define('VOTER_EVENT_ID_FIELD', 'event_id');
     define('VOTER_IS_ACTIVE_FIELD', 'is_active');
     define('VOTER_IS_ADMIN_FIELD', 'is_admin');
@@ -47,6 +48,7 @@
     define('RESPONSE_IS_SUPERADMIN_FIELD', 'is_superadmin');
     define('RESPONSE_IS_ADMIN_FIELD', 'is_admin');
     define('RESPONSE_IS_JOINED_FIELD', 'is_joined');
+    define('RESPONSE_IS_PUBLIC_FIELD', 'is_public_event');
 
     define('MESSAGE_ERROR_USER_FAILED_LOGIN', 'Email and password that you entered don\'t match. Please check and try again.');
     define('MESSAGE_ERROR_EVENT_FAILED_POST', 'Event that you entered dont\'t completed.');

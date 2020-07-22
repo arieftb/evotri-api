@@ -34,7 +34,7 @@ class EventController extends BaseController
             $voter[VOTER_IS_ACTIVE_FIELD] = '1';
             $voter[VOTER_IS_ADMIN_FIELD] = '1';
 
-            $voterPost = $event->voter()->save($voter);
+            $voterPost = $event->voters->save($voter);
 
             if ($voterPost) {
                 return $this->response(null, 201);
@@ -47,14 +47,15 @@ class EventController extends BaseController
     }
 
     // TODO : Not Finish Yet
-    public function indexWithCredential(Request $request)
+    public function index(Request $request)
     {
-
         $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
 
         if ($credential) {
             $user_id = $credential->user_id;
             $request[USER_ID_FOREIGN_FIELD] = $user_id;
+        } else {
+            return $this->response($this->indexPublic(), 200);
         }
 
         $events = Events::all();
@@ -64,9 +65,22 @@ class EventController extends BaseController
             $events = $events->where(EVENT_IS_PUBLIC, $is_public);
         }
 
-        // return response($events);
+        if ($request->has(RESPONSE_IS_JOINED_FIELD)) {
+            $is_joined = $request->input(RESPONSE_IS_JOINED_FIELD);
+            $events = $events->where(RESPONSE_IS_JOINED_FIELD, $is_joined);
+        }
+
+        if ($request->has(VOTER_IS_ADMIN_FIELD)) {
+            $is_admin = $request->input(VOTER_IS_ADMIN_FIELD);
+            $events = $events->where(VOTER_IS_ADMIN_FIELD, $is_admin);
+        }
+
         return $this->response($events, 200);
     }
 
-    
+    public function indexPublic()
+    {
+        $events = Events::where(EVENT_IS_PUBLIC, (string) 0)->get();
+        return $events;
+    }
 }

@@ -26,6 +26,9 @@ class UserAuthenticate extends BaseController
                 return $this->response(null, 401);
             }
         } else {
+            if ($request->is('*/events')) {
+                return $next($request);
+            }
             return $this->response(null, 401);
         }
     }

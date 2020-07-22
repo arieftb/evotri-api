@@ -31,7 +31,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->put('/users/{id}', 'UserController@update');
         $router->delete('/users/{id}', 'UserController@destroy');
 
-        $router->get('/events', 'EventController@indexWithCredential');
+        $router->get('/events', 'EventController@index');
         $router->post('/events', 'EventController@store');
 
         // TODO : Change Function Name

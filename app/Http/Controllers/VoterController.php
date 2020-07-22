@@ -27,7 +27,7 @@ class VoterController extends BaseController
     {
         $user_id = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->firstOrFail()->user_id;
         $event = Events::where(ID_FIELD, $event_id)->where(EVENT_CODE_FIELD, $request->input(EVENT_CODE_FIELD))->firstOrFail();
-        $voter = $event->voter->where(USER_ID_FOREIGN_FIELD, $user_id)->first();
+        $voter = $event->voters->where(USER_ID_FOREIGN_FIELD, $user_id)->first();
 
         if ($voter) {
             return $this->response(null, 409);
