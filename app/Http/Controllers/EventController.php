@@ -85,4 +85,24 @@ class EventController extends BaseController
         $events = Events::where(EVENT_IS_PUBLIC, (string) 0)->get();
         return $events;
     }
+
+    public function update(Request $request, $id)
+    {
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+        
+        if ($credential) {
+            $user_id = $credential->user_id;
+        } else return $this->response(null, 401);
+
+        $is_admin = Voters::where(USER_ID_FOREIGN_FIELD, $user_id)->where(EVENT_ID_FOREIGN_FIELD, $id)->first()->is_admin;
+
+        if ($is_admin != 1) return $this->response(null, 401);
+
+        try {
+            Events::findOrFail($id)->update($request->all());
+            return $this->response(null, 204);
+        } catch (\Throwable $th) {
+            return $this->responseError($th->getCode(), $th->getMessage());
+        }
+    }
 }

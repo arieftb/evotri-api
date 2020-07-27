@@ -33,6 +33,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
 
         $router->get('/events', 'EventController@index');
         $router->post('/events', 'EventController@store');
+        $router->put('/events/{id}', 'EventController@update');
 
         // TODO : Change Function Name
         $router->post('/events/{event_id}/voters', 'VoterController@storeByEvent');
