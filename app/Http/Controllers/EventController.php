@@ -102,4 +102,21 @@ class EventController extends BaseController
             return $this->responseError($th->getCode(), $th->getMessage());
         }
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+        
+        if ($credential) {
+            $user_id = $credential->user_id;
+        } else return $this->response(null, 401);
+
+        try {
+            $events = Events::allEventsFiltered($user_id)->where(EVENT_ID_FIELD, $id)->first();
+            $events->delete();
+            return $this->response(null, 204);
+        } catch (\Throwable $th) {
+            return $this->responseError($th->getCode());
+        }
+    }
 }
