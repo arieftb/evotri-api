@@ -86,7 +86,7 @@ class EventController extends BaseController
     public function update(Request $request, $id)
     {
         $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
-        
+
         if ($credential) {
             $user_id = $credential->user_id;
         } else return $this->response(null, 401);
@@ -106,16 +106,19 @@ class EventController extends BaseController
     public function destroy(Request $request, $id)
     {
         $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
-        
+
         if ($credential) {
             $user_id = $credential->user_id;
         } else return $this->response(null, 401);
 
         try {
             $events = Events::allEventsFiltered($user_id)->where(EVENT_ID_FIELD, $id)->first();
-            $events->delete();
-            return $this->response(null, 204);
+            if ($events && $events->is_admin == 1) {
+                $events->delete();
+                return $this->response(null, 204);
+            } else return $this->response(null, 401);
         } catch (\Throwable $th) {
+            echo $th->getMessage();
             return $this->responseError($th->getCode());
         }
     }
