@@ -57,6 +57,9 @@ class BaseController extends Controller
             case 403:
                 return 'Bad Request';
                 break;
+            case 404:
+                return 'Not Found';
+                break;
             case 409:
                 return 'Duplicate';
                 break;

@@ -126,9 +126,22 @@ class EventController extends BaseController
 
     public function show(Request $request, $id)
     {
-        $userId = null;
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+        $userId = $credential != null ? $credential->user_id : null;
         $events = Events::allEventsFiltered($userId);
-        $event = $events->where(EVENT_ID_FIELD, $id)->first();
-        return $this->response($event, 200);
+        $event = $events->where(EVENT_ID_FIELD, $id);
+        
+        if ($credential) {
+            $event = $event->filter(function ($event) {
+                return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
+            })->first();
+        } else {
+            $event = $event->where(RESPONSE_IS_PUBLIC_FIELD, 1)->first();
+        }
+
+        if ($event) {
+            return $this->response($event, 200);
+        } else return $this->response(null, 404);
     }
 }
