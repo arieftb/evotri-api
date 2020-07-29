@@ -50,7 +50,8 @@ class EventController extends BaseController
     // TODO : Not Finish Yet
     public function index(Request $request)
     {
-        if ($request->has(HEADER_AUTH_KEY)) {
+
+        if ($request->hasHeader(HEADER_AUTH_KEY)) {
             $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
             $user_id = $credential->user_id;
             $request[USER_ID_FOREIGN_FIELD] = $user_id;
