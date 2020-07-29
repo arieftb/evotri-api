@@ -59,10 +59,9 @@ class EventController extends BaseController
             return $this->response($this->indexPublic(), 200);
         }
 
+        $events = Events::allEventsFiltered($user_id);
 
-        $events = Events::all();
-
-        if ($request->has(EVENT_IS_PUBLIC)) {
+        if ($request->has(RESPONSE_IS_PUBLIC_FIELD)) {
             $is_public = $request->input(EVENT_IS_PUBLIC);
             $events = $events->where(EVENT_IS_PUBLIC, $is_public);
         }
