@@ -26,7 +26,7 @@ class UserAuthenticate extends BaseController
                 return $this->response(null, 401);
             }
         } else {
-            if ($request->is('*/events') && $request->isMethod('get')) {
+            if ($request->is('*/events/*') && $request->isMethod('get')) {
                 return $next($request);
             }
             return $this->response(null, 401);

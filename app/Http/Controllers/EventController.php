@@ -123,4 +123,12 @@ class EventController extends BaseController
             return $this->responseError($th->getCode());
         }
     }
+
+    public function show(Request $request, $id)
+    {
+        $userId = null;
+        $events = Events::allEventsFiltered($userId);
+        $event = $events->where(EVENT_ID_FIELD, $id)->first();
+        return $this->response($event, 200);
+    }
 }
