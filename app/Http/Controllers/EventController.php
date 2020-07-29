@@ -50,16 +50,14 @@ class EventController extends BaseController
     // TODO : Not Finish Yet
     public function index(Request $request)
     {
-        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
-
-        if ($credential) {
+        if ($request->has(HEADER_AUTH_KEY)) {
+            $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
             $user_id = $credential->user_id;
             $request[USER_ID_FOREIGN_FIELD] = $user_id;
+            $events = Events::allEventsFiltered($user_id);
         } else {
-            return $this->response($this->indexPublic(), 200);
+            $events =  $this->indexPublic();
         }
-
-        $events = Events::allEventsFiltered($user_id);
 
         if ($request->has(RESPONSE_IS_PUBLIC_FIELD)) {
             $is_public = $request->input(EVENT_IS_PUBLIC);
@@ -81,7 +79,7 @@ class EventController extends BaseController
 
     public function indexPublic()
     {
-        $events = Events::where(EVENT_IS_PUBLIC, (string) 0)->get();
+        $events = Events::where(EVENT_IS_PUBLIC, (string) 1)->get();
         return $events;
     }
 
