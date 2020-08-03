@@ -106,7 +106,7 @@ class VoterController extends BaseController
                 Voters::findOrFail($id)->update($request->all());
                 return $this->response(null, 204);
             } catch (\Throwable $th) {
-                //throw $th;
+                return $this->responseError($th->getCode(), $th->getMessage());
             }
         } else return $this->response(null, 401);
     }
