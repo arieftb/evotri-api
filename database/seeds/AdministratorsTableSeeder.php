@@ -13,7 +13,7 @@ class AdministratorsTableSeeder extends Seeder
     public function run()
     {
         $administrator = [
-            'user_id' => '4'
+            'user_id' => '1'
         ];
 
         DB::table('administrators')->insert($administrator);

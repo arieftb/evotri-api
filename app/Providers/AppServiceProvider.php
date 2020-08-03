@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // TODO : IMPROVE THIS
-        Collection::macro('isVisbleEvent', function() {
+        Collection::macro('isVisibleEvent', function() {
             return collect($this)->filter(function ($event) {
                 return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
             });

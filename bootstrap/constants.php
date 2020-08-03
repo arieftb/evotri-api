@@ -42,8 +42,8 @@
 
     define('VOTER_TABLE', 'voters');
     define('VOTER_EVENT_ID_FIELD', 'event_id');
-    define('VOTER_IS_ACTIVE_FIELD', 'is_active');
-    define('VOTER_IS_ADMIN_FIELD', 'is_admin');
+    define('VOTER_IS_ACTIVE_FIELD', 'active');
+    define('VOTER_IS_ADMIN_FIELD', 'admin');
 
 
     define('RESPONSE_USER_FIELD', 'user');

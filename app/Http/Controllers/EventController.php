@@ -27,6 +27,7 @@ class EventController extends BaseController
             $user_id = $credential->user->id;
 
             $request[EVENT_CODE_FIELD] = EncryptHelper::encryptPasword($request[EVENT_NAME_FIELD] . $request->Input(EVENT_DATE_FIELD));
+
             $event = Events::create($request->all());
 
             $voter = new Voters();
@@ -84,7 +85,7 @@ class EventController extends BaseController
 
     public function indexPublic()
     {
-        $events = Events::where(EVENT_IS_PUBLIC, (string) 1)->get();
+        $events = Events::allEventsFiltered(EVENT_IS_PUBLIC, (string) 1);
         return $events;
     }
 
