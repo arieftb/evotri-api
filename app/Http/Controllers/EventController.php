@@ -15,6 +15,10 @@ class EventController extends BaseController
 {
     public function store(Request $request)
     {
+        if ($request->hasHeader(EVENT_CODE_FIELD)) {
+            return $this->join($request);
+        }
+
         $validation = Validator::make($request->all(), Events::getEventPostRule());
 
         if ($validation->fails()) {
@@ -87,6 +91,42 @@ class EventController extends BaseController
     {
         $events = Events::allEventsFiltered(EVENT_IS_PUBLIC, (string) 1);
         return $events;
+    }
+
+    public function join(Request $request)
+    {
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+        if ($credential) {
+            $user_id = $credential->user_id;
+        } else return $this->response(null, 401);
+
+        $event = Events::allEventsFiltered($user_id)->where(EVENT_CODE_FIELD, $request->header(EVENT_CODE_FIELD))->first();
+
+        if ($event) {
+            if ($event->is_joined == 1) {
+                return $this->response(null, 409);
+            }
+
+            try {
+                $user_id = $credential->user->id;
+    
+                $request[EVENT_ID_FOREIGN_FIELD] = $event->id;
+                $request[USER_ID_FOREIGN_FIELD] = $user_id;
+    
+                $voter = Voters::create($request->all());
+    
+                if ($voter) {
+                    return $this->response(null, 201);
+                } else {
+                    return $this->response(null, 400);
+                }
+            } catch (\Throwable $th) {
+                return $this->responseError($th->getCode(), $th->getMessage());
+            }
+
+
+        } else return $this->response(null, 404);
     }
 
     public function update(Request $request, $id)
