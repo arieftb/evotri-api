@@ -10,9 +10,9 @@ class Voters extends Model {
 
     protected $fillable = [USER_ID_FOREIGN_FIELD, EVENT_ID_FOREIGN_FIELD, VOTER_IS_ACTIVE_FIELD, VOTER_IS_ADMIN_FIELD];
 
-    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, USER_TABLE, USER_ID_FOREIGN_FIELD];
+    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, USER_TABLE, USER_ID_FOREIGN_FIELD, VOTER_IS_ACTIVE_FIELD, VOTER_IS_ADMIN_FIELD];
 
-    protected $appends = [RESPONSE_USER_FIELD];
+    protected $appends = [RESPONSE_IS_ADMIN_FIELD, RESPONSE_IS_ACTIVE_FIELD, RESPONSE_USER_FIELD];
 
     public function getVoterRules()
     {
@@ -31,6 +31,16 @@ class Voters extends Model {
     public function users()
     {
         return $this->belongsTo(Users::class, USER_ID_FOREIGN_FIELD);
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return (int) $this->admin;
+    }
+
+    public function getIsActiveAttribute()
+    {
+        return (int) $this->active;
     }
 
     public function getUserAttribute()
