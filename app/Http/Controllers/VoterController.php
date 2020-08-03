@@ -59,10 +59,10 @@ class VoterController extends BaseController
         $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
 
         $userId = $credential != null ? $credential->user_id : null;
-        $events = Events::allEventsFiltered($userId)->where(EVENT_ID_FIELD, $event_id)->isVisbleEvent();
+        $events = Events::allEventsFiltered($userId)->where(EVENT_ID_FIELD, $event_id)->isVisibleEvent()->first();
 
-        if ($events->isEmpty()) {
-            return $this->response($events, 200);
+        if (!$events) {
+            return $this->response($events, 404);
         }
 
         $event = $events->first();
