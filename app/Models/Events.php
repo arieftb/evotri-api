@@ -13,6 +13,8 @@ class Events extends Model {
 
     protected $appends = [RESPONSE_IS_PUBLIC_FIELD, RESPONSE_IS_ACTIVE_FIELD, USER_ID_FOREIGN_FIELD];
 
+    protected $fillable = [EVENT_NAME_FIELD, EVENT_DATE_FIELD, EVENT_IS_PUBLIC, EVENT_REGISTRATION_OPEN_FIELD, EVENT_REGISTRATION_CLOSE_FIELD];
+
 
     public static function getEventPostRule() {
         return [

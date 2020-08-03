@@ -38,7 +38,6 @@ class VoterController extends BaseController
             $request[EVENT_ID_FOREIGN_FIELD] = $event->id;
 
             try {
-                //code...
                 $voter = Voters::create($request->all());
 
                 if ($voter) {
@@ -47,9 +46,29 @@ class VoterController extends BaseController
                     return $this->response(null, 400);
                 }
             } catch (\Throwable $th) {
-                //throw $th;
                 return $this->responseError($th->getCode(), $th->getMessage());
             }
+        } else {
+            return $this->response(null, 400);
+        }
+    }
+
+    // TODO : GET VOTERS BY EVENT
+    public function index(Request $request, $event_id)
+    {
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+        $userId = $credential != null ? $credential->user_id : null;
+        $events = Events::allEventsFiltered($userId);
+        $event = $events->where(EVENT_ID_FIELD, $event_id)->first();
+
+        $is_admin = $event->is_admin == 1;
+        $is_public = $event->is_public == 1;
+        $is_joined = $event->is_joined == 1;
+
+        if ($userId != null || ($is_admin || $is_joined || $is_public)) {
+            $voters = Voters::where(EVENT_ID_FOREIGN_FIELD, $event_id)->get();
+            return $this->response($voters, 200);
         } else {
             return $this->response(null, 400);
         }

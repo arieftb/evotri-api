@@ -7,6 +7,7 @@
     define('MODIFIED_AT_FIELD', 'updated_at');
     define('ID_FIELD', 'id');
 
+    define('USER_TABLE', 'users');
     define('USER_ID_FIELD', 'id');
     define('USER_CODE_FIELD', 'code');
     define('USER_EMAIL_FIELD', 'email');
@@ -45,6 +46,7 @@
     define('VOTER_IS_ADMIN_FIELD', 'is_admin');
 
 
+    define('RESPONSE_USER_FIELD', 'user');
     define('RESPONSE_IS_SUPERADMIN_FIELD', 'is_superadmin');
     define('RESPONSE_IS_ADMIN_FIELD', 'is_admin');
     define('RESPONSE_IS_JOINED_FIELD', 'is_joined');

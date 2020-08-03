@@ -38,8 +38,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->delete('/events/{id}', 'EventController@destroy');
 
         // TODO : Change Function Name
+        $router->get('/events/{event_id}/voters', 'VoterController@index');
         $router->post('/events/{event_id}/voters', 'VoterController@storeByEvent');
-
-        $router->post('/events/{event_id}/voters/{voter_id}', 'EventAdminController@store');
     });
 });

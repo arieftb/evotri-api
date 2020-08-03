@@ -13,7 +13,11 @@ class Users extends Model {
 
     protected $hidden = [USER_PASSWORD_FIELD, 'created_at', 'updated_at'];
 
-
-
     protected $fillable = [USER_CODE_FIELD, USER_NAME_FIELD, USER_EMAIL_FIELD, USER_IMAGE_FIELD, USER_PHONE_FIELD, USER_PASSWORD_FIELD, USER_BIRTHDATE_FIELD];
+
+
+    public function voters()
+    {
+        return $this->hasMany(Voters::class, USER_ID_FOREIGN_FIELD);
+    }
 }

@@ -131,7 +131,8 @@ class EventController extends BaseController
         $userId = $credential != null ? $credential->user_id : null;
         $events = Events::allEventsFiltered($userId);
         $event = $events->where(EVENT_ID_FIELD, $id);
-        
+
+        // TODO : IMPROVE THIS IN NEXT UPDATE AFTER FIRST RELEASE OK?
         if ($credential) {
             $event = $event->filter(function ($event) {
                 return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
