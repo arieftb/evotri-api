@@ -72,6 +72,17 @@ class VoterController extends BaseController
 
         if ($is_admin || $is_joined || $is_public) {
             $voters = Voters::where(EVENT_ID_FOREIGN_FIELD, $event_id)->get();
+
+            if ($request->has(RESPONSE_IS_ACTIVE_FIELD)) {
+                $is_active = $request->input(RESPONSE_IS_ACTIVE_FIELD);
+                $voters = $voters->where(RESPONSE_IS_ACTIVE_FIELD, $is_active);
+            }
+
+            if ($request->has(RESPONSE_IS_ADMIN_FIELD)) {
+                $is_admin = $request->input(RESPONSE_IS_ADMIN_FIELD);
+                $voters = $voters->where(RESPONSE_IS_ADMIN_FIELD, $is_admin);
+            }
+
             return $this->response($voters, 200);
         } else {
             return $this->response(null, 400);
