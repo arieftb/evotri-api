@@ -68,4 +68,12 @@ class Events extends Model {
 
         return $collection;
     }
+
+
+    public function scopeFilterIsAdminIsPublicIsJoined($query) {
+        return $query->get()->filter(function ($event) {
+            return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
+        });
+
+    }
 }

@@ -59,14 +59,18 @@ class VoterController extends BaseController
         $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
 
         $userId = $credential != null ? $credential->user_id : null;
-        $events = Events::allEventsFiltered($userId);
-        $event = $events->where(EVENT_ID_FIELD, $event_id)->first();
+        $events = Events::allEventsFiltered($userId)->where(EVENT_ID_FIELD, $event_id)->isVisbleEvent();
 
+        if ($events->isEmpty()) {
+            return $this->response($events, 200);
+        }
+
+        $event = $events->first();
         $is_admin = $event->is_admin == 1;
         $is_public = $event->is_public == 1;
         $is_joined = $event->is_joined == 1;
 
-        if ($userId != null || ($is_admin || $is_joined || $is_public)) {
+        if ($is_admin || $is_joined || $is_public) {
             $voters = Voters::where(EVENT_ID_FOREIGN_FIELD, $event_id)->get();
             return $this->response($voters, 200);
         } else {

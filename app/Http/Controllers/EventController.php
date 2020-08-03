@@ -56,6 +56,10 @@ class EventController extends BaseController
             $user_id = $credential->user_id;
             $request[USER_ID_FOREIGN_FIELD] = $user_id;
             $events = Events::allEventsFiltered($user_id);
+
+            $events = $events->filter(function ($event) {
+                return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
+            });
         } else {
             $events =  $this->indexPublic();
         }
@@ -132,17 +136,15 @@ class EventController extends BaseController
         $events = Events::allEventsFiltered($userId);
         $event = $events->where(EVENT_ID_FIELD, $id);
 
-        // TODO : IMPROVE THIS IN NEXT UPDATE AFTER FIRST RELEASE OK?
+
         if ($credential) {
-            $event = $event->filter(function ($event) {
-                return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
-            })->first();
+            $event = $event->isVisibleEvent()->first();
         } else {
             $event = $event->where(RESPONSE_IS_PUBLIC_FIELD, 1)->first();
         }
 
         if ($event) {
             return $this->response($event, 200);
-        } else return $this->response(null, 404);
+        } else return $this->response(null, 200);
     }
 }
