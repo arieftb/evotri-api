@@ -35,6 +35,8 @@ class Voters extends Model {
 
     public function getUserAttribute()
     {
+        $this->users->makeHidden(USER_CODE_FIELD);
+        $this->users->makeHidden(USER_BIRTHDATE_FIELD);
         return $this->users;
     }
 }
