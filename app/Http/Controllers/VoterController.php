@@ -77,4 +77,26 @@ class VoterController extends BaseController
             return $this->response(null, 400);
         }
     }
+
+    public function update(Request $request, $event_id, $id) {
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+        $userId = $credential != null ? $credential->user_id : null;
+        $event = Events::allEventsFiltered($userId)->where(EVENT_ID_FIELD, $event_id)->isVisibleEvent()->first();
+
+        if (!$event) {
+            return $this->response($event, 404);
+        }
+
+        $is_admin = $event->is_admin == 1;
+
+        if ($is_admin) {
+            try {
+                Voters::findOrFail($id)->update($request->all());
+                return $this->response(null, 204);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        } else return $this->response(null, 401);
+    }
 }
