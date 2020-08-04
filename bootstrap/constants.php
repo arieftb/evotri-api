@@ -45,6 +45,15 @@
     define('VOTER_IS_ACTIVE_FIELD', 'active');
     define('VOTER_IS_ADMIN_FIELD', 'admin');
 
+    define('CANDIDATE_TABLE', 'candidates');
+    define('CANDIDATE_ID_FIELD', 'id');
+    define('CANDIDATE_VOTER_ID_FIELD', 'voter_id');
+    define('CANDIDATE_VISION_FIELD', 'vision');
+    define('CANDIDATE_MISSION_FIELD', 'mission');
+    define('CANDIDATE_ACTIVE_FIELD', 'active');
+    define('CANDIDATE_NUMBER_FIELD', 'number');
+    define('CANDIDATE_IMAGE_FIELD', 'image');
+
 
     define('RESPONSE_USER_FIELD', 'user');
     define('RESPONSE_IS_SUPERADMIN_FIELD', 'is_superadmin');
