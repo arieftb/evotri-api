@@ -35,7 +35,7 @@ class CandidateController extends BaseController
         $candidates = ModelsCandidates::with(VOTER_TABLE)->get()
             ->filter(function ($item) use ($event) {
                 return $item->voters->event_id == $event->id;
-            });
+            })->sortBy(CANDIDATE_NUMBER_FIELD);
 
         if ($request->has(RESPONSE_IS_ACTIVE_FIELD)) {
             $candidates = $candidates->where(RESPONSE_IS_ACTIVE_FIELD, $request->input(RESPONSE_IS_ACTIVE_FIELD));
