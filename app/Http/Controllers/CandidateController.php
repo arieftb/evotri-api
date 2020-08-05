@@ -96,9 +96,10 @@ class CandidateController extends BaseController
         $voter = Voters::where(EVENT_ID_FOREIGN_FIELD, $event_id)->where(USER_ID_FOREIGN_FIELD, $userId)->first();
         if (!$voter) return $this->response($voter, 404, MESSAGE_ERROR_CANDIDATE_NOT_FOUND);
 
-        if ($voter->is_admin == 1 || $voter->user->id == $userId) {
-            $candidate = ModelsCandidates::find($id);
-            if (!$candidate) return $this->response($candidate, 404);
+        $candidate = ModelsCandidates::find($id);
+        if (!$candidate) return $this->response($candidate, 404);
+
+        if ($voter->is_admin == 1 || $voter->user->id == $userId || $candidate->voter_id == $voter->id) {
             try {
                 $candidate->update($request->all());
                 return $this->response(null, 204);
