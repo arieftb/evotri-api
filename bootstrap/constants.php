@@ -20,6 +20,7 @@
     define('USER_ID_FOREIGN_FIELD', 'user_id');
     define('VOTER_ID_FOREIGN_FIELD', 'voter_id');
     define('EVENT_ID_FOREIGN_FIELD', 'event_id');
+    define('CANDIDATE_ID_FOREIGN_FIELD', 'candidate_id');
 
 
     define('CREDENTIAL_TOKEN_FIELD', 'token');
@@ -54,6 +55,9 @@
     define('CANDIDATE_ACTIVE_FIELD', 'active');
     define('CANDIDATE_NUMBER_FIELD', 'number');
     define('CANDIDATE_IMAGE_FIELD', 'image');
+
+    define('VOTE_TABLE', 'votes');
+    define('VOTE_ID_FIELD', 'id');
 
 
     define('RESPONSE_USER_FIELD', 'user');

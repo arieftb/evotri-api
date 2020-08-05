@@ -46,5 +46,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->post('/events/{event_id}/candidates', 'CandidateController@store');
         $router->put('/events/{event_id}/candidates/{id}', 'CandidateController@update');
         $router->delete('/events/{event_id}/candidates/{id}', 'CandidateController@destroy');
+
+        $router->post('/events/{event_id}/candidates/{id}/votes', 'VoteController@store');
     });
 });

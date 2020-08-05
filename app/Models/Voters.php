@@ -38,6 +38,11 @@ class Voters extends Model {
         return $this->hasOne(Candidates::class, VOTER_ID_FOREIGN_FIELD);
     }
 
+    public function votes()
+    {
+        return $this->hasOne(Votes::class, VOTER_ID_FOREIGN_FIELD);
+    }
+
     public function getIsAdminAttribute()
     {
         return (int) $this->admin;

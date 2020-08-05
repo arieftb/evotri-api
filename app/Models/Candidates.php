@@ -39,4 +39,9 @@ class Candidates extends Model
     {
         return $this->belongsTo(Voters::class, VOTER_ID_FOREIGN_FIELD);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Votes::class, CANDIDATE_ID_FOREIGN_FIELD);
+    }
 }
