@@ -89,5 +89,20 @@ class CandidateController extends BaseController
 
     public function update(Request $request, $event_id, $id)
     {
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+        $userId = $credential != null ? $credential->user_id : null;
+        if (!$userId) return $this->response(null, 401);
+
+        $voter = Voters::where(EVENT_ID_FOREIGN_FIELD, $event_id)->where(USER_ID_FOREIGN_FIELD, $userId)->first();
+        if (!$voter) return $this->response($voter, 404, MESSAGE_ERROR_CANDIDATE_NOT_FOUND);
+
+        if ($voter->is_admin == 1 || $voter->user->id == $userId) {
+            try {
+                ModelsCandidates::find($id)->update($request->all());
+                return $this->response(null, 204);
+            } catch (\Throwable $th) {
+                return $this->responseError($th->getCode(), $th->getMessage());
+            }
+        } else return $this->response(null, 401);
     }
 }

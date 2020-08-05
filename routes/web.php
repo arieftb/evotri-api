@@ -44,5 +44,6 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
 
         $router->get('/events/{event_id}/candidates', 'CandidateController@index');
         $router->post('/events/{event_id}/candidates', 'CandidateController@store');
+        $router->put('/events/{event_id}/candidates/{id}', 'CandidateController@update');
     });
 });

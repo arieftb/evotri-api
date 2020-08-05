@@ -69,4 +69,5 @@
     
     define('MESSAGE_ERROR_EVENT_NOT_FOUND', 'Event that you seek not found');
     define('MESSAGE_ERROR_VOTER_NOT_FOUND', 'Voter that you seek not found');
+    define('MESSAGE_ERROR_CANDIDATE_NOT_FOUND', 'Candidate that you seek not found');
 ?>
