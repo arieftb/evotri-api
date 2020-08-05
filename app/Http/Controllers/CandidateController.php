@@ -63,11 +63,15 @@ class CandidateController extends BaseController
         $candidate = $voter->candidates;
         if ($voter && $candidate) return $this->response(null, 409);
 
-        $number = ModelsCandidates::with(VOTER_TABLE)->get()
-            ->filter(function ($item) use ($event) {
-                return $item->voters->event_id == $event->id;
-            })->sortBy(CANDIDATE_NUMBER_FIELD)->last()->number;
-        $request[CANDIDATE_NUMBER_FIELD] = $number ? $number + 1 : 1;
+        if ($request->input(CANDIDATE_NUMBER_FIELD)) {
+            $request[CANDIDATE_NUMBER_FIELD] = $request->input(CANDIDATE_NUMBER_FIELD);
+        } else {
+            $number = ModelsCandidates::with(VOTER_TABLE)->get()
+                ->filter(function ($item) use ($event) {
+                    return $item->voters->event_id == $event->id;
+                })->sortBy(CANDIDATE_NUMBER_FIELD)->last()->number;
+            $request[CANDIDATE_NUMBER_FIELD] = $number ? $number + 1 : 1;
+        }
 
         $validation = Validator::make($request->all(), ModelsCandidates::candidateRules());
         if ($validation->fails()) return $this->response(null, 400, MESSAGE_ERROR_CANDIDATE_FAILED_POST);
