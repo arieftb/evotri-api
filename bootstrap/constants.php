@@ -41,6 +41,7 @@
 
 
     define('VOTER_TABLE', 'voters');
+    define('VOTER_ID_FIELD', 'id');
     define('VOTER_EVENT_ID_FIELD', 'event_id');
     define('VOTER_IS_ACTIVE_FIELD', 'active');
     define('VOTER_IS_ADMIN_FIELD', 'admin');
@@ -63,5 +64,9 @@
     define('RESPONSE_IS_ACTIVE_FIELD', 'is_active');
 
     define('MESSAGE_ERROR_USER_FAILED_LOGIN', 'Email and password that you entered don\'t match. Please check and try again.');
-    define('MESSAGE_ERROR_EVENT_FAILED_POST', 'Event that you entered dont\'t completed.');
+    define('MESSAGE_ERROR_EVENT_FAILED_POST', 'Event that you entered dont\'t completed. Please check and try again.');
+    define('MESSAGE_ERROR_CANDIDATE_FAILED_POST', 'Candidate form that you entered dont\'t completed. Please check and try again.');
+    
+    define('MESSAGE_ERROR_EVENT_NOT_FOUND', 'Event that you seek not found');
+    define('MESSAGE_ERROR_VOTER_NOT_FOUND', 'Voter that you seek not found');
 ?>

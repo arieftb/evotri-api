@@ -33,6 +33,11 @@ class Voters extends Model {
         return $this->belongsTo(Users::class, USER_ID_FOREIGN_FIELD);
     }
 
+    public function candidates()
+    {
+        return $this->hasOne(Candidates::class, VOTER_ID_FOREIGN_FIELD);
+    }
+
     public function getIsAdminAttribute()
     {
         return (int) $this->admin;

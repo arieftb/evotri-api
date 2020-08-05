@@ -1,7 +1,14 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use App\Http\Controllers\BaseController;
+use App\Models\Candidates as ModelsCandidates;
+use App\Models\Credentials;
+use App\Models\Events;
+use App\Models\Voters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CandidateController extends BaseController
 {
@@ -15,8 +22,68 @@ class CandidateController extends BaseController
         //
     }
 
-    public function index(Request $request) 
+    public function index(Request $request, $event_id)
     {
-        
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+
+        $userId = $credential != null ? $credential->user_id : null;
+        $event = Events::allEventsFiltered($userId)->where(EVENT_ID_FIELD, $event_id)->isVisibleEvent()->first();
+
+        if (!$event) return $this->response(null, 404);
+
+        // TODO : IMPROVE THIS FILTERING NEXT UPDATE
+        $candidates = ModelsCandidates::with(VOTER_TABLE)->get()
+            ->filter(function ($item) use ($event) {
+                return $item->voters->event_id == $event->id;
+            });
+
+        if ($request->has(RESPONSE_IS_ACTIVE_FIELD)) {
+            $candidates = $candidates->where(RESPONSE_IS_ACTIVE_FIELD, $request->input(RESPONSE_IS_ACTIVE_FIELD));
+        }
+
+        return $this->response($candidates, 200);
+    }
+
+    public function store(Request $request, $event_id)
+    {
+        $validationRequest = Validator::make($request->all(), ModelsCandidates::candidateRequestRules());
+        if ($validationRequest->fails()) return $this->response(null, 400, MESSAGE_ERROR_CANDIDATE_FAILED_POST);
+
+        $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
+        $userId = $credential != null ? $credential->user_id : null;
+
+        $event = Events::allEventsFiltered($userId)->where(EVENT_ID_FIELD, $event_id)->isVisibleEvent()->first();
+        if (!$event) return $this->response($event, 404, MESSAGE_ERROR_EVENT_NOT_FOUND);
+        if ($event && $event->is_admin == 0) return $this->response(null, 401);
+
+
+        $voter = Voters::where(VOTER_ID_FIELD, $request->input(VOTER_ID_FOREIGN_FIELD))->first();
+        if (!$voter) return $this->response($voter, 404, MESSAGE_ERROR_VOTER_NOT_FOUND);
+
+        $candidate = $voter->candidates;
+        if ($voter && $candidate) return $this->response(null, 409);
+
+        $number = ModelsCandidates::with(VOTER_TABLE)->get()
+            ->filter(function ($item) use ($event) {
+                return $item->voters->event_id == $event->id;
+            })->last()->number;
+        $request[CANDIDATE_NUMBER_FIELD] = $number ? $number + 1 : 1;
+
+        $validation = Validator::make($request->all(), ModelsCandidates::candidateRules());
+        if ($validation->fails()) return $this->response(null, 400, MESSAGE_ERROR_CANDIDATE_FAILED_POST);
+
+        try {
+            $candidate = ModelsCandidates::create($request->all());
+            if ($candidate) {
+                return $this->response(null, 201);
+            }
+            return $this->response(null, 400);
+        } catch (\Throwable $th) {
+            return $this->responseError($th->getCode(), $th->getMessage());
+        }
+    }
+
+    public function update(Request $request, $event_id, $id)
+    {
     }
 }

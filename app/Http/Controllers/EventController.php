@@ -92,7 +92,8 @@ class EventController extends BaseController
         $events = Events::allEventsFiltered(EVENT_IS_PUBLIC, (string) 1);
         return $events;
     }
-
+    
+// TODO : IF events is public the user is directly active
     public function join(Request $request)
     {
         $credential = Credentials::where(CREDENTIAL_TOKEN_FIELD, $request->header(HEADER_AUTH_KEY))->first();
