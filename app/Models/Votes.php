@@ -14,7 +14,8 @@ class Votes extends BaseModel
     {
         return [
             VOTER_ID_FOREIGN_FIELD => 'required|numeric',
-            CANDIDATE_ID_FOREIGN_FIELD => 'required|numeric'
+            CANDIDATE_ID_FOREIGN_FIELD => 'required|numeric',
+            EVENT_ID_FOREIGN_FIELD => 'required|numeric'
         ];
     }
 

@@ -28,6 +28,7 @@ class VoteController extends BaseController
 
         $request[CANDIDATE_ID_FOREIGN_FIELD] = $candidate->id;
         $request[VOTER_ID_FOREIGN_FIELD] = $voter->id;
+        $request[EVENT_ID_FOREIGN_FIELD] = $voter->events->id;
 
         $validationRequest = Validator::make($request->all(), Votes::voteRule());
         if ($validationRequest->fails()) return $this->response(null, 400, MESSAGE_ERROR_CANDIDATE_FAILED_POST);
