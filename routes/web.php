@@ -37,15 +37,15 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->put('/events/{id}', 'EventController@update');
         $router->delete('/events/{id}', 'EventController@destroy');
 
-        // TODO : Change Function Name
-        $router->get('/events/{event_id}/voters', 'VoterController@index');
+        $router->get('/events/{event_id}/voters', 'VoterController@index'); // TODO: GET IS CANDIDATE FOR EACH VOTER
         $router->post('/events/{event_id}/voters', 'VoterController@storeByEvent');
         $router->put('/events/{event_id}/voters/{id}', 'VoterController@update');
 
-        $router->get('/events/{event_id}/candidates', 'CandidateController@index');
+        $router->get('/events/{event_id}/candidates', 'CandidateController@index'); // TODO : GET VOTE COUNT FOR EACH CANDIDATE
         $router->post('/events/{event_id}/candidates', 'CandidateController@store');
         $router->put('/events/{event_id}/candidates/{id}', 'CandidateController@update');
         $router->delete('/events/{event_id}/candidates/{id}', 'CandidateController@destroy');
+        $router->get('/events/{event_id}/candidates/{id}', 'VoteController@show'); //TODO : GET VOTE COUNT PER CANDIDATE
 
         $router->post('/events/{event_id}/candidates/{id}/votes', 'VoteController@store');
     });

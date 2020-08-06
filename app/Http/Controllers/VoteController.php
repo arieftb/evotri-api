@@ -43,4 +43,9 @@ class VoteController extends BaseController
             return $this->responseError($th->getCode(), $th->getMessage());
         }
     }
+
+    public function index(Request $request, $event_id)
+    {
+        
+    }
 }
