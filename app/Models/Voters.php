@@ -55,7 +55,7 @@ class Voters extends Model {
 
     public function getIsCandidateAttribute()
     {
-        return $this->candidates != null ? 1 : 0;
+        return $this->candidates != null && $this->candidates->is_active == 1 ? 1 : 0;
     }
 
     public function getUserAttribute()
