@@ -66,7 +66,8 @@
     define('RESPONSE_IS_JOINED_FIELD', 'is_joined');
     define('RESPONSE_IS_PUBLIC_FIELD', 'is_public');
     define('RESPONSE_IS_ACTIVE_FIELD', 'is_active');
-    define('RESPONSE_VOTES_COUNT_FIELD', 'vote_count');
+    define('RESPONSE_IS_CANDIDATE_FIELD', 'is_candidate'); //TODO : Add This To Voters -> candidate active
+    define('RESPONSE_VOTES_COUNT_FIELD', 'vote_count'); //TODO : Add This To Candidate -> candidate active
 
     define('MESSAGE_ERROR_USER_FAILED_LOGIN', 'Email and password that you entered don\'t match. Please check and try again.');
     define('MESSAGE_ERROR_EVENT_FAILED_POST', 'Event that you entered dont\'t completed. Please check and try again.');

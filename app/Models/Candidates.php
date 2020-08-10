@@ -9,7 +9,7 @@ class Candidates extends Model
 {
     protected $table = CANDIDATE_TABLE;
 
-    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, VOTER_ID_FOREIGN_FIELD, CANDIDATE_ACTIVE_FIELD];
+    protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, VOTER_ID_FOREIGN_FIELD, CANDIDATE_ACTIVE_FIELD, CANDIDATE_TABLE];
 
     protected $appends = [RESPONSE_IS_ACTIVE_FIELD];
 
