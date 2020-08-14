@@ -27,10 +27,10 @@ class CredentialController extends BaseController
             ->where(USER_EMAIL_FIELD, '=', $request->input(USER_EMAIL_FIELD))
             ->first();
 
-        if (password_verify(
+        if ($user && password_verify(
             $request->input(USER_PASSWORD_FIELD),
-            $user[USER_PASSWORD_FIELD]
-        ) && $user) {
+            $user->password
+        )) {
             $request[USER_ID_FOREIGN_FIELD] = $user[USER_ID_FIELD];
             $request[CREDENTIAL_LOGIN_DATETIME_FILED] = date('Y-m-d H:i:s');
             $request[CREDENTIAL_TOKEN_FIELD] =
