@@ -38,7 +38,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->delete('/events/{id}', 'EventController@destroy');
 
         $router->get('/events/{event_id}/voters', 'VoterController@index'); // TODO: GET IS CANDIDATE FOR EACH VOTER
-        $router->post('/events/{event_id}/voters', 'VoterController@storeByEvent');
+        $router->post('/events/{event_id}/join', 'VoterController@storeByEvent');
         $router->put('/events/{event_id}/voters/{id}', 'VoterController@update');
 
         $router->get('/events/{event_id}/candidates', 'CandidateController@index'); // TODO : GET VOTE COUNT FOR EACH CANDIDATE
