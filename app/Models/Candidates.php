@@ -11,7 +11,7 @@ class Candidates extends Model
 
     protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, VOTER_ID_FOREIGN_FIELD, CANDIDATE_ACTIVE_FIELD, CANDIDATE_TABLE];
 
-    protected $appends = [RESPONSE_IS_ACTIVE_FIELD];
+    protected $appends = [RESPONSE_IS_ACTIVE_FIELD, RESPONSE_VOTES_COUNT_FIELD];
 
     protected $guarded = [CANDIDATE_ID_FIELD, CREATED_AT_FIELD, MODIFIED_AT_FIELD];
 
@@ -33,6 +33,11 @@ class Candidates extends Model
     public function getIsActiveAttribute()
     {
         return (int) $this->active;
+    }
+
+    public function getVoteCountAttribute()
+    {
+        return (int) $this->votes->count();
     }
     
     public function voters()
