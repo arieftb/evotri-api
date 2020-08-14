@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Events extends Model {
+class Events extends Model
+{
     protected $table = 'events';
 
     protected $hidden = [CREATED_AT_FIELD, MODIFIED_AT_FIELD, EVENT_IS_PUBLIC, EVENT_IS_ACTIVE_FIELD, USER_ID_FOREIGN_FIELD];
@@ -13,15 +14,17 @@ class Events extends Model {
 
     protected $appends = [RESPONSE_IS_PUBLIC_FIELD, RESPONSE_IS_ACTIVE_FIELD, USER_ID_FOREIGN_FIELD];
 
-    protected $fillable = [EVENT_NAME_FIELD, EVENT_DATE_FIELD, EVENT_IS_PUBLIC, EVENT_REGISTRATION_OPEN_FIELD, EVENT_REGISTRATION_CLOSE_FIELD, EVENT_CODE_FIELD, EVENT_IS_ACTIVE_FIELD];
+    protected $fillable = [EVENT_NAME_FIELD, EVENT_DATE_FIELD, EVENT_IS_PUBLIC, EVENT_REGISTRATION_OPEN_FIELD, EVENT_REGISTRATION_CLOSE_FIELD, EVENT_CODE_FIELD, EVENT_IS_ACTIVE_FIELD,
+        EVENT_ELECTION_END_DATE_FIELD, EVENT_ELECTION_START_DATE_FIELD, EVENT_PUBLISH_DATE_FIELD,
+    ];
 
-
-    public static function getEventPostRule() {
+    public static function getEventPostRule()
+    {
         return [
             EVENT_NAME_FIELD => 'required',
             EVENT_DATE_FIELD => 'required',
             EVENT_REGISTRATION_OPEN_FIELD => 'required',
-            EVENT_REGISTRATION_CLOSE_FIELD => 'required'
+            EVENT_REGISTRATION_CLOSE_FIELD => 'required',
         ];
     }
 
@@ -35,8 +38,8 @@ class Events extends Model {
         return (int) $this->public;
     }
 
-
-    public function getUserIdAttribute() {
+    public function getUserIdAttribute()
+    {
         return 33;
     }
 
@@ -45,8 +48,9 @@ class Events extends Model {
         return (int) $this->active;
     }
 
-    public static function allEventsFiltered($userId) {
-        $events = Events::all(); 
+    public static function allEventsFiltered($userId)
+    {
+        $events = Events::all();
         $collection = $events->map(function ($item) use ($userId) {
             $eventId = $item->id;
 
@@ -69,8 +73,8 @@ class Events extends Model {
         return $collection;
     }
 
-
-    public function scopeFilterIsAdminIsPublicIsJoined($query) {
+    public function scopeFilterIsAdminIsPublicIsJoined($query)
+    {
         return $query->get()->filter(function ($event) {
             return $event->is_admin == 1 || $event->is_joined == 1 || $event->is_public == 1;
         });

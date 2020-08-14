@@ -35,6 +35,9 @@
     define('EVENT_REGISTRATION_CLOSE_FIELD', 'registration_close_date');
     define('EVENT_DATE_FIELD', 'date');
     define('EVENT_IS_PUBLIC', 'public');
+    define('EVENT_PUBLISH_DATE_FIELD', 'publish_date');
+    define('EVENT_ELECTION_START_DATE_FIELD', 'election_start_date');
+    define('EVENT_ELECTION_END_DATE_FIELD', 'election_end_date');
 
 
     define('EVENT_ADMIN_VOTER_ID_FIELD', 'voter_id');
